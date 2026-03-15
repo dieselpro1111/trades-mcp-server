@@ -7,12 +7,169 @@ An MCP server providing AI agents with tools for skilled trades businesses:
 - Job scope templates with labor hour estimates
 - Permit requirement checker
 
-Built with FastMCP. Monetize via xpay or API key gating.
+Built with FastMCP. API key monetization with free and pro tiers.
 """
 
-from fastmcp import FastMCP
+import json
+import logging
+import os
+import time
 
-mcp = FastMCP("TradesPro")
+from fastmcp import FastMCP
+from fastmcp.server.dependencies import get_http_headers
+from fastmcp.server.middleware import Middleware, MiddlewareContext, CallNext
+from fastmcp.tools.tool import ToolResult
+from mcp.types import TextContent
+
+logger = logging.getLogger(__name__)
+
+# ---------------------------------------------------------------------------
+# AUTH CONFIG
+# ---------------------------------------------------------------------------
+
+FREE_DEMO_KEY = "trades_demo_2026"
+FREE_TIER_LIMIT = 10  # calls per hour
+UPGRADE_URL = "https://bluecollar.run/pro"
+
+def _load_api_keys() -> dict[str, str]:
+    """Load API key -> tier mapping from API_KEYS env var."""
+    raw = os.environ.get("API_KEYS", "")
+    if not raw:
+        return {}
+    try:
+        keys = json.loads(raw)
+        if not isinstance(keys, dict):
+            logger.warning("API_KEYS env var is not a JSON object, ignoring")
+            return {}
+        return keys
+    except json.JSONDecodeError:
+        logger.warning("API_KEYS env var is not valid JSON, ignoring")
+        return {}
+
+
+# ---------------------------------------------------------------------------
+# RATE LIMITING
+# ---------------------------------------------------------------------------
+
+# In-memory rate tracking: key -> {"count": int, "window_start": float}
+_rate_limits: dict[str, dict] = {}
+
+
+def _check_rate_limit(session_key: str) -> tuple[bool, int]:
+    """Check if a session has exceeded the free tier rate limit.
+
+    Returns (allowed, remaining_calls).
+    """
+    now = time.time()
+    if session_key not in _rate_limits:
+        _rate_limits[session_key] = {"count": 0, "window_start": now}
+
+    bucket = _rate_limits[session_key]
+
+    # Reset window if an hour has passed
+    if now - bucket["window_start"] >= 3600:
+        bucket["count"] = 0
+        bucket["window_start"] = now
+
+    if bucket["count"] >= FREE_TIER_LIMIT:
+        return False, 0
+
+    bucket["count"] += 1
+    remaining = FREE_TIER_LIMIT - bucket["count"]
+    return True, remaining
+
+
+# ---------------------------------------------------------------------------
+# AUTH MIDDLEWARE
+# ---------------------------------------------------------------------------
+
+class AuthMiddleware(Middleware):
+    """API key authentication and rate limiting middleware.
+
+    - Checks X-API-Key header on tool calls
+    - Free tier (no key / demo key): 10 calls/hour, footer appended
+    - Pro tier (valid paid key): unlimited, no footer
+    - Tool listing (tools/list) is NOT gated so directories can introspect
+    """
+
+    async def on_call_tool(self, context, call_next):
+        # Resolve tier from API key header
+        headers = get_http_headers(include={"x-api-key"})
+        api_key = headers.get("x-api-key", "")
+        tier = self._resolve_tier(api_key)
+
+        if tier == "pro":
+            # Pro tier: unlimited, no modifications
+            return await call_next(context)
+
+        # Free tier: enforce rate limit
+        session_key = api_key if api_key else "anonymous"
+        allowed, remaining = _check_rate_limit(session_key)
+
+        if not allowed:
+            return ToolResult(content=[TextContent(
+                type="text",
+                text=(
+                    f"## Rate limit exceeded\n\n"
+                    f"You've used all {FREE_TIER_LIMIT} free calls this hour.\n\n"
+                    f"Get unlimited access with a Pro API key at {UPGRADE_URL}\n\n"
+                    f"Your limit resets in about {self._minutes_until_reset(session_key)} minutes."
+                ),
+            )])
+
+        # Execute the tool
+        result = await call_next(context)
+
+        # Append free tier footer to the result
+        footer = (
+            f"\n\n---\n"
+            f"\U0001f513 Free tier - {remaining} calls remaining this hour "
+            f"({FREE_TIER_LIMIT}/hour). "
+            f"Get unlimited access at {UPGRADE_URL}"
+        )
+
+        if result.content:
+            last = result.content[-1]
+            if isinstance(last, TextContent):
+                result.content[-1] = TextContent(
+                    type="text",
+                    text=last.text + footer,
+                )
+            else:
+                result.content.append(TextContent(type="text", text=footer))
+        else:
+            result.content = [TextContent(type="text", text=footer)]
+
+        return result
+
+    def _resolve_tier(self, api_key: str) -> str:
+        """Determine the tier for a given API key."""
+        if not api_key or api_key == FREE_DEMO_KEY:
+            return "free"
+
+        api_keys = _load_api_keys()
+        tier = api_keys.get(api_key)
+        if tier == "pro":
+            return "pro"
+
+        # Unknown key — treat as free tier
+        return "free"
+
+    def _minutes_until_reset(self, session_key: str) -> int:
+        """Minutes until the rate limit window resets."""
+        bucket = _rate_limits.get(session_key)
+        if not bucket:
+            return 60
+        elapsed = time.time() - bucket["window_start"]
+        remaining = max(0, 3600 - elapsed)
+        return max(1, int(remaining / 60))
+
+
+# ---------------------------------------------------------------------------
+# SERVER INIT
+# ---------------------------------------------------------------------------
+
+mcp = FastMCP("TradesPro", middleware=[AuthMiddleware()])
 
 # ---------------------------------------------------------------------------
 # DATA: Building Codes (IRC 2024 / NEC 2023 / UPC 2024 — simplified reference)
