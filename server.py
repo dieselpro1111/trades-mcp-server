@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 FREE_DEMO_KEY = "trades_demo_2026"
 FREE_TIER_LIMIT = 10  # calls per hour
-UPGRADE_URL = "https://bluecollar.run/pro"
+UPGRADE_URL = "https://tradespros.gumroad.com/l/yyzov"
 
 def _load_api_keys() -> dict[str, str]:
     """Load API key -> tier mapping from API_KEYS env var."""
