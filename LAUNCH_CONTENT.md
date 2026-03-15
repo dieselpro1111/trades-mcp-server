@@ -1,6 +1,6 @@
 # TradesPro MCP Server — Launch Content
 
-> All pieces are copy-paste ready. Replace `[YOUR_URL]` and `[YOUR_GITHUB]` before posting.
+> All pieces are copy-paste ready. Replace `[YOUR_URL]` and `https://github.com/dieselpro1111/trades-mcp-server` before posting.
 
 ---
 
@@ -44,7 +44,7 @@ This is built with FastMCP and is MIT licensed. But it's also wired up for xpay 
 **Zero competition:**
 I checked Smithery, MCP.so, and Glama.ai before building this. Nothing. The MCP ecosystem has dozens of servers for developer tooling, productivity apps, and data APIs — but nothing for the 700,000+ licensed electricians, plumbers, and HVAC techs in the US alone.
 
-GitHub: [YOUR_GITHUB]
+GitHub: https://github.com/dieselpro1111/trades-mcp-server
 Try it: [YOUR_URL]
 
 Happy to answer questions about the architecture or the xpay integration.
@@ -80,7 +80,7 @@ This isn't a replacement for a licensed electrician. The AI still can't read fie
 **Example use:**
 Ask Claude (with TradesPro): "What are the AFCI requirements for a bedroom circuit in a new residential build under NEC 2023?" — it returns the actual NEC 2023 section, not a hallucination.
 
-It's free and open source: [YOUR_GITHUB]
+It's free and open source: https://github.com/dieselpro1111/trades-mcp-server
 
 If you try it and find a code section that's wrong or a material price that's way off, open an issue. I want this to be actually accurate, not just impressive-sounding.
 
@@ -128,7 +128,7 @@ Manual J is a calculation — TradesPro gives you the framework and parameters, 
 **Why I built it:**
 AI assistants are getting used in HVAC shops for customer proposals and quick code checks. The base models don't have reliable HVAC code knowledge. This fills that gap with something accurate and structured.
 
-Free and open source: [YOUR_GITHUB]
+Free and open source: https://github.com/dieselpro1111/trades-mcp-server
 Try it with Claude: [YOUR_URL]
 
 What am I missing? What do you actually look up constantly that would save you time?
@@ -178,7 +178,7 @@ It can't replace field judgment. Existing drain conditions, soil stack health, a
 
 Built this because AI assistants are already being used in plumbing shops for proposals and code questions, and the base models are unreliable on specific UPC citations. This fixes that.
 
-Free, MIT licensed, open source: [YOUR_GITHUB]
+Free, MIT licensed, open source: https://github.com/dieselpro1111/trades-mcp-server
 
 What code topics do you look up constantly? I want to make sure the coverage is right.
 
@@ -243,7 +243,7 @@ Run it free for your own shop or host it as a paid service. The trades SaaS mark
 **Tweet 6 (try it):**
 Built with FastMCP. Works with Claude, and any MCP-compatible client.
 
-GitHub: [YOUR_GITHUB]
+GitHub: https://github.com/dieselpro1111/trades-mcp-server
 Try it: [YOUR_URL]
 
 If you're an electrician, plumber, or HVAC tech — tell me what I got wrong. I want the code coverage to be right.
@@ -255,7 +255,7 @@ If you're building in the MCP ecosystem, the trades vertical is wide open.
 
 Star the repo if this is useful. PRs welcome — especially for regional code amendments and additional material pricing.
 
-[YOUR_GITHUB]
+https://github.com/dieselpro1111/trades-mcp-server
 
 ---
 
@@ -287,7 +287,7 @@ The code knowledge is structured as a query layer rather than a RAG pipeline ove
 
 **The gap:** Checked Smithery, MCP.so, and Glama.ai — no MCP servers exist for the trades. There are 700K+ licensed tradespeople in the US, most in small businesses with limited software budgets. The incumbent estimating tools (ServiceTitan, Jobber, etc.) are expensive and not AI-native.
 
-GitHub: [YOUR_GITHUB]
+GitHub: https://github.com/dieselpro1111/trades-mcp-server
 Live demo: [YOUR_URL]
 
 Happy to discuss the data modeling approach or the trades software market.
@@ -319,7 +319,7 @@ This is an open source contribution, MIT licensed, free to use. It's also struct
 
 The trades are not a backwater. They're a $500B+ industry running on outdated tooling, and AI is starting to reach them. Building accurate, domain-specific knowledge tools for this market is both useful work and a real business opportunity.
 
-If you're a developer building in the AI tooling space, or a trades professional who wants to try it, the GitHub is here: [YOUR_GITHUB]
+If you're a developer building in the AI tooling space, or a trades professional who wants to try it, the GitHub is here: https://github.com/dieselpro1111/trades-mcp-server
 
 ---
 
@@ -350,7 +350,7 @@ Would a 20-minute call make sense? Or I can just send you the link and you can p
 
 [YOUR NAME]
 [YOUR_URL]
-[YOUR_GITHUB]
+https://github.com/dieselpro1111/trades-mcp-server
 
 ---
 
@@ -403,7 +403,7 @@ A few things I'm working on next:
 
 If you're a trade professional, I'd genuinely love to hear what code topics you look up most and what's missing. The goal is accuracy, not impressive-sounding.
 
-GitHub: [YOUR_GITHUB]
+GitHub: https://github.com/dieselpro1111/trades-mcp-server
 
 ---
 
@@ -419,7 +419,7 @@ The technical approach: rather than RAG over raw code text (which produces seman
 
 Happy to answer questions about the architecture, the data model, or the trades software market.
 
-[YOUR_GITHUB] | [YOUR_URL]
+https://github.com/dieselpro1111/trades-mcp-server | [YOUR_URL]
 
 ---
 
