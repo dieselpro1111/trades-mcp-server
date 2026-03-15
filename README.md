@@ -96,21 +96,81 @@ Once connected, ask your AI assistant:
 - "What size wire do I need for a 50A circuit?"
 - "Estimate materials for a bathroom rough-in"
 
-## Monetization
+## Authentication & Pricing
 
-### Option 1: xpay (Pay-per-call, zero code changes)
+TradesPro uses API key-based authentication with two tiers:
+
+### Free Tier (default)
+- Access to **all 7 tools** — try everything before buying
+- **10 calls per hour** rate limit
+- Use demo key `trades_demo_2026` or connect without any key
+- Responses include a small footer with upgrade link
+
+### Pro Tier
+- **Unlimited** access to all tools
+- No rate limiting
+- No footer messages
+- Get your API key at [bluecollar.run/pro](https://bluecollar.run/pro)
+
+### Configuring Your API Key
+
+#### Claude Desktop
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "trades-pro": {
+      "url": "https://your-server-url.com/mcp",
+      "headers": {
+        "X-API-Key": "pk_your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+#### Cursor
+Add to `~/.cursor/mcp.json`:
+```json
+{
+  "mcpServers": {
+    "trades-pro": {
+      "url": "https://your-server-url.com/mcp",
+      "headers": {
+        "X-API-Key": "pk_your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+#### Free Tier (no key needed)
+```json
+{
+  "mcpServers": {
+    "trades-pro": {
+      "url": "https://your-server-url.com/mcp"
+    }
+  }
+}
+```
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `API_KEYS` | JSON string mapping API keys to tiers, e.g. `{"pk_abc123": "pro"}` | `""` (free tier only) |
+| `PORT` | HTTP server port | `8000` |
+
+### Additional Monetization Options
+
+#### xpay (Pay-per-call, zero code changes)
 1. Deploy the server as an HTTP endpoint
 2. Register at [xpay.sh](https://xpay.sh)
 3. Set per-tool pricing ($0.01–$0.25 per call)
 4. Share the proxy URL instead of your direct server URL
 
-### Option 2: API Key Gating (Freemium)
-Following the [21st.dev model](https://cline.bot/blog/building-the-mcp-economy-lessons-from-21st-dev-and-the-future-of-plugin-monetization):
-1. First 5 requests free
-2. $20/month for unlimited access
-3. Distribute on Smithery, Cline marketplace
-
-### Option 3: B2B Retainer
+#### B2B Retainer
 Bundle this server with a custom AI agent for trade businesses:
 - Charge $500–$2,000/month per client
 - Customize data for their local market (local pricing, local codes)
