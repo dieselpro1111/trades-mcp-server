@@ -67,11 +67,11 @@ git init
 git add .
 git commit -m "Initial commit: TradesPro MCP server with 7 tools"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/trades-mcp-server.git
+git remote add origin https://github.com/dieselpro1111/trades-mcp-server.git
 git push -u origin main
 ```
 
-> Replace `YOUR_USERNAME` with the GitHub username you just created.
+> Replace `dieselpro1111` with the GitHub username you just created.
 
 - [ ] When prompted, enter your GitHub username and password
   - **Note:** GitHub requires a Personal Access Token instead of your password for command-line pushes. If you get an authentication error:
@@ -84,7 +84,7 @@ git push -u origin main
 
 - [ ] Refresh your GitHub page — you should see all your files listed
 
-> Your code is now live at: `https://github.com/YOUR_USERNAME/trades-mcp-server`
+> Your code is now live at: `https://github.com/dieselpro1111/trades-mcp-server`
 
 ---
 
@@ -219,7 +219,7 @@ https://smithery.ai/server/YOUR-USERNAME/trades-mcp-server
 
 - [ ] Go to **https://mcp.so**
 - [ ] Find **"Submit a server"** or **"Add server"**
-- [ ] Paste your GitHub repo URL: `https://github.com/YOUR_USERNAME/trades-mcp-server`
+- [ ] Paste your GitHub repo URL: `https://github.com/dieselpro1111/trades-mcp-server`
 - [ ] Fill in:
   - **Name:** TradesPro MCP Server
   - **Description:** MCP server for skilled trades — building codes, material pricing, job scoping, and permit requirements for electrical, plumbing, and HVAC work
@@ -292,7 +292,7 @@ https://smithery.ai/server/YOUR-USERNAME/trades-mcp-server
 
 | What | URL |
 |------|-----|
-| GitHub Repo | `https://github.com/YOUR_USERNAME/trades-mcp-server` |
+| GitHub Repo | `https://github.com/dieselpro1111/trades-mcp-server` |
 | Railway Dashboard | `https://railway.app/dashboard` |
 | Live Server | `https://YOUR-RAILWAY-URL/mcp` |
 | xpay Dashboard | `https://xpay.sh/dashboard` |
