@@ -2,6 +2,8 @@
 
 An MCP (Model Context Protocol) server that gives AI assistants access to skilled trades knowledge — building codes, material pricing, job scoping, and permit requirements for **electrical, plumbing, and HVAC** work.
 
+[![TradesPro MCP server](https://glama.ai/mcp/servers/dieselpro1111/trades-mcp-server/badges/card.svg)](https://glama.ai/mcp/servers/dieselpro1111/trades-mcp-server)
+
 ## Why This Exists
 
 AI assistants (Claude, ChatGPT, Cursor) can't look up building codes, estimate materials, or scope trade jobs accurately. This MCP server fixes that by giving agents structured, queryable access to:
