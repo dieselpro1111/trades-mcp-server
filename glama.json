@@ -1,7 +1,9 @@
 {
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
   "name": "TradesPro",
   "description": "MCP server for skilled trades (electrical, plumbing, HVAC). Provides residential building code lookups (NEC 2023, UPC 2024, IRC), material cost estimates for 40+ items, job scoping with labor hours and pricing, and permit requirement checks. 7 tools covering 3 trades.",
   "repository": "https://github.com/dieselpro1111/trades-mcp-server",
   "endpoint": "https://trades-mcp-server-production.up.railway.app/mcp",
+  "maintainers": ["dieselpro1111"],
   "categories": ["Other Tools"]
 }
